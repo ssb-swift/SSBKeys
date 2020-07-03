@@ -1,3 +1,3 @@
-struct ssb_keys {
+struct SSBKeys {
     var text = "Hello, World!"
 }

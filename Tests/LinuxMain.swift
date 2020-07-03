@@ -1,7 +1,7 @@
 import XCTest
 
-import ssb_keysTests
+import SSBKeysTests
 
 var tests = [XCTestCaseEntry]()
-tests += ssb_keysTests.allTests()
+tests += SSBKeysTests.allTests()
 XCTMain(tests)
