@@ -9,6 +9,7 @@
  See AUTHORS for the list of the project authors
 */
 
+import Foundation
 import Crypto
 
 func hash(data: String, encoding: String.Encoding = .utf8) -> String {
@@ -19,6 +20,14 @@ func hash(data: String, encoding: String.Encoding = .utf8) -> String {
 }
 
 extension String {
+    func fromBase64(using encoding: String.Encoding = .utf8) -> String {
+        guard let data = Data(base64Encoded: self) else {
+            return ""
+        }
+
+        return String(data: data, encoding: encoding)!
+    }
+
     func toBase64(using encoding: String.Encoding = .utf8) -> String {
         return self.data(using: encoding)!.base64EncodedString()
     }
