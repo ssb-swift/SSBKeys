@@ -14,6 +14,11 @@ import XCTest
 @testable import SSBKeys
 
 final class SSBKeysTests: XCTestCase {
+    func testGetTag() {
+        let ssbId = "@gaQw6zD4pHrg8zmrqku24zTSAINhRg=.ed25519"
+        XCTAssertEqual(SSBKeys.getTag(from: ssbId), "ed25519", "Tag from SSB ID")
+    }
+
     func testHash() {
         // Get the correct SHA256 hash of a given data and encoding
         let utf8Data = "SSB".data(using: .utf8)
@@ -41,6 +46,7 @@ final class SSBKeysTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testHash", testHash)
+        ("testHash", testHash),
+        ("testGetTag", testGetTag)
     ]
 }

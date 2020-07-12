@@ -12,6 +12,11 @@
 import Foundation
 import Crypto
 
+func getTag(from ssbId: String) -> String {
+    let index = ssbId.index(after: ssbId.lastIndex(of: ".") ?? ssbId.endIndex)
+    return String(ssbId[index..<ssbId.endIndex])
+}
+
 func hash(data: String, encoding: String.Encoding = .utf8) -> String {
     let encodedData = data.data(using: encoding)
     let hashedData = SHA256.hash(data: encodedData.unsafelyUnwrapped)

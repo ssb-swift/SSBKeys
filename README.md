@@ -8,6 +8,20 @@ TBD
 
 ## API
 
+### `getTag(from:)`
+
+Returns the tag from a given SSB ID or key.
+
+#### Declaration
+
+```swift
+func getTag(from ssbId: String) -> String
+```
+
+#### Parameters
+
+- **from**: SSB ID or key.
+
 ### `hash(data:encoding:)`
 
 Returns a Base-64 encoded string of the SHA256 of a given data.
