@@ -10,17 +10,17 @@ TBD
 
 ### `getTag(from:)`
 
-Returns the tag from a given SSB ID or key.
+Returns the tag from a given SSB ID or Key.
 
 #### Declaration
 
 ```swift
-func getTag(from ssbId: String) -> String
+func getTag(from id: String) -> String
 ```
 
 #### Parameters
 
-- **from**: SSB ID or key.
+- **from**: SSB ID or Key.
 
 ### `hash(data:encoding:)`
 
