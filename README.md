@@ -8,6 +8,23 @@ TBD
 
 ## API
 
+### `init(encryption:seed:)`
+
+Creates and returns a Keys type with encryption Curve25519 `<ed25519>` by default (no other type of encryption is supported yet) and accepts an optional seed that has to be a 32-byte `<Data>` type buffer.
+
+**Note**: if the provided seed is not 32-byte long, this function throws.
+
+### Declaration
+
+```swift
+init(encryption: Encryption = .curve25519, seed: Data? = nil) -> Keys
+```
+
+### Parameters
+
+- **encryption**: [Encryption](). Default value is `.curve25519`.
+- **seed**: Optional 32-byte [Data](https://developer.apple.com/documentation/foundation/data) type buffer.
+
 ### `getTag(from:)`
 
 Returns the tag from a given SSB ID or Key.

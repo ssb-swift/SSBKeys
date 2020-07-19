@@ -9,11 +9,30 @@
  See AUTHORS for the list of the project authors
 */
 
+import Foundation
 import Crypto
 import XCTest
 @testable import SSBKeys
 
 final class SSBKeysTests: XCTestCase {
+    func testKeysInit() {
+        let keysOne = Keys()
+        let keysTwo = Keys()
+
+        XCTAssertNotNil(keysOne.encryption, "The Encryption property exist")
+        XCTAssertNotNil(keysOne.privateKey, "The privateKey property exist")
+        XCTAssertNotNil(keysOne.publicKey, "The publicKey property exist")
+        XCTAssertNotEqual(keysOne, keysTwo, "Public keys are different")
+    }
+
+    func testKeysInitWithSeed() {
+        let seed = "Z!6iT@z@g8U3y8CgpqM2yAuKc_ki!*Z8".data(using: .utf8)
+        let keysOne = Keys(seed: seed)
+        let keysTwo = Keys(seed: seed)
+
+        XCTAssertEqual(keysOne, keysTwo, "Public keys are equal when seeded")
+    }
+
     func testGetTag() {
         let ssbId = "@gaQw6zD4pHrg8zmrqku24zTSAINhRg=.ed25519"
         XCTAssertEqual(SSBKeys.getTag(from: ssbId), "ed25519", "Tag from SSB ID")
@@ -46,6 +65,8 @@ final class SSBKeysTests: XCTestCase {
     }
 
     static var allTests = [
+        ("testKeysInit", testKeysInit),
+        ("testKeysInitWithSeed", testKeysInitWithSeed),
         ("testHash", testHash),
         ("testGetTag", testGetTag)
     ]

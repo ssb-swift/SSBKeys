@@ -12,9 +12,32 @@
 import Foundation
 import Crypto
 
-func getTag(from ssbId: String) -> String {
-    let index = ssbId.index(after: ssbId.lastIndex(of: ".") ?? ssbId.endIndex)
-    return String(ssbId[index..<ssbId.endIndex])
+enum Encryption: String {
+    case curve25519 = "ed25519"
+}
+public struct Keys: Equatable {
+    let encryption: Encryption
+    let privateKey: Data
+    let publicKey: Data
+
+    init(encryption: Encryption = .curve25519, seed: Data? = nil) {
+        let key: Curve25519.Signing.PrivateKey
+
+        if let buffer = seed {
+            key = try! Curve25519.Signing.PrivateKey(rawRepresentation: buffer)
+        } else {
+            key = Curve25519.Signing.PrivateKey()
+        }
+
+        self.encryption = encryption
+        self.privateKey = key.rawRepresentation
+        self.publicKey = key.publicKey.rawRepresentation
+    }
+}
+
+func getTag(from id: String) -> String {
+    let index = id.index(after: id.lastIndex(of: ".") ?? id.endIndex)
+    return String(id[index..<id.endIndex])
 }
 
 func hash(data: String, encoding: String.Encoding = .utf8) -> String {
