@@ -34,8 +34,8 @@ final class SSBKeysTests: XCTestCase {
     }
 
     func testGetTag() {
-        let ssbId = "@gaQw6zD4pHrg8zmrqku24zTSAINhRg=.ed25519"
-        XCTAssertEqual(SSBKeys.getTag(from: ssbId), "ed25519", "Tag from SSB ID")
+        let id = "@gaQw6zD4pHrg8zmrqku24zTSAINhRg=.ed25519"
+        XCTAssertEqual(SSBKeys.getTag(from: id), "ed25519", "Tag from SSB ID")
     }
 
     func testHash() {

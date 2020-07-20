@@ -12,8 +12,8 @@
 import Foundation
 import Crypto
 
-enum Encryption: String {
-    case curve25519 = "ed25519"
+enum Encryption: String, Codable {
+    case ed25519
 }
 public struct Keys: Equatable {
     let encryption: Encryption
@@ -24,9 +24,9 @@ public struct Keys: Equatable {
         let key: Curve25519.Signing.PrivateKey
 
         if let buffer = seed {
-            key = try! Curve25519.Signing.PrivateKey(rawRepresentation: buffer)
+            privateKey = try! Curve25519.Signing.PrivateKey(rawRepresentation: buffer)
         } else {
-            key = Curve25519.Signing.PrivateKey()
+            privateKey = Curve25519.Signing.PrivateKey()
         }
 
         self.encryption = encryption
