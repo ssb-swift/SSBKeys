@@ -22,7 +22,11 @@ final class SSBKeysTests: XCTestCase {
         XCTAssertNotNil(keysOne.encryption, "The Encryption property exist")
         XCTAssertNotNil(keysOne.privateKey, "The privateKey property exist")
         XCTAssertNotNil(keysOne.publicKey, "The publicKey property exist")
-        XCTAssertNotEqual(keysOne, keysTwo, "Public keys are different")
+        XCTAssertNotEqual(
+            keysOne.publicKey.rawRepresentation,
+            keysTwo.publicKey.rawRepresentation,
+            "Public keys are different"
+        )
     }
 
     func testKeysInitWithSeed() {
@@ -30,12 +34,54 @@ final class SSBKeysTests: XCTestCase {
         let keysOne = Keys(seed: seed)
         let keysTwo = Keys(seed: seed)
 
-        XCTAssertEqual(keysOne, keysTwo, "Public keys are equal when seeded")
+        XCTAssertEqual(
+            keysOne.privateKey.rawRepresentation,
+            keysTwo.privateKey.rawRepresentation,
+            "Private keys are equal when seeded"
+        )
+        XCTAssertEqual(
+            keysOne.publicKey.rawRepresentation,
+            keysTwo.publicKey.rawRepresentation,
+            "Public keys are equal when seeded"
+        )
+    }
+
+    func testKeysInitFromJSON() {
+        let keys = Keys()
+        let decoder = JSONDecoder()
+        let jsonData = keys.toJSON().data(using: .utf8)!
+        let keysFromJSON = try! decoder.decode(Keys.self, from: jsonData)
+
+        XCTAssertEqual(
+            keys.privateKey.rawRepresentation,
+            keysFromJSON.privateKey.rawRepresentation,
+            "Private keys are equal when created from JSON"
+        )
+        XCTAssertEqual(
+            keys.publicKey.rawRepresentation,
+            keysFromJSON.publicKey.rawRepresentation,
+            "Public keys are equal when created from JSON"
+        )
+    }
+
+    func testKeysToJSON() {
+        let keys = Keys()
+        let json = keys.toJSON()
+        let jsonObject = try? JSONSerialization.jsonObject(with: json.data(using: .utf8)!, options: [])
+
+        XCTAssertTrue(JSONSerialization.isValidJSONObject(jsonObject!), "The function returns a valid JSON")
+
+        if let data = jsonObject as? [String: Any] {
+            XCTAssertTrue(data.keys.contains("curve"), "Contains a \"curve\" key")
+            XCTAssertTrue(data.keys.contains("private"), "Contains a \"private\" key")
+            XCTAssertTrue(data.keys.contains("public"), "Contains a \"public\" key")
+            XCTAssertTrue(data.keys.contains("id"), "Contains a \"id\" key")
+        }
     }
 
     func testGetTag() {
         let id = "@gaQw6zD4pHrg8zmrqku24zTSAINhRg=.ed25519"
-        XCTAssertEqual(SSBKeys.getTag(from: id), "ed25519", "Tag from SSB ID")
+        XCTAssertEqual(SSBKeys.getTag(from: id), "ed25519", "Extract the tag from values")
     }
 
     func testHash() {
@@ -67,6 +113,8 @@ final class SSBKeysTests: XCTestCase {
     static var allTests = [
         ("testKeysInit", testKeysInit),
         ("testKeysInitWithSeed", testKeysInitWithSeed),
+        ("testKeysInitFromJSON", testKeysInitFromJSON),
+        ("testKeysToJSON", testKeysToJSON),
         ("testHash", testHash),
         ("testGetTag", testGetTag)
     ]
