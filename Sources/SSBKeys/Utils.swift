@@ -1,38 +1,38 @@
-/*
- This source file is part of the SSBKeys open source project
- 
- Copyright (c) 2020 project authors licensed under Mozilla Public License, v.2.0
- If a copy of the MPL was not distributed with this file, You can obtain one at
- http://mozilla.org/MPL/2.0/.
-
- See LICENSE for license information
- See AUTHORS for the list of the project authors
-*/
+//
+// This source file is part of the SSBKeys open source project.
+//
+// Copyright (c) 2020 project authors licensed under Mozilla Public License, v.2.0.
+// If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+//
+// See LICENSE for license information.
+// See AUTHORS for the list of the project authors.
+//
 
 import Foundation
 import Crypto
 
-/**
- Tag from a given value that corresponds to the type of encryption used to create those Keys.
- 
- - Parameter value: Value to get the tag from i.e., an SSB private/public key or id.
- 
- - Returns: Tag or encryption type used to encode the value.
- */
+///
+/// Tag from a given value that corresponds to the type of encryption used to create those Keys.
+///
+/// - Parameters:
+///     - value:    Value to get the tag from i.e., an SSB private/public key or id.
+///
+/// - Returns:      Tag or encryption type used to encode the value.
+///
 public func getTag(from value: String) -> String {
     let index = value.index(after: value.lastIndex(of: ".") ?? value.endIndex)
     return String(value[index..<value.endIndex])
 }
 
-/**
- Base-64 encoded string using a SHA-2 (Secure Hash Algorithm 2) *<SHA-256>* of a given data.
- 
- - Parameters:
-    - data: String representation of the data to encode.
-    - encoding: String encoding property. Default value is `.utf8`.
- 
- - Returns: Base-64 data hash.
- */
+///
+/// Base-64 encoded string using a SHA-2 (Secure Hash Algorithm 2) *<SHA-256>* of a given data.
+///
+/// - Parameters:
+///     - data:     String representation of the data to encode.
+///     - encoding: String encoding property. Default value is `.utf8`.
+///
+/// - Returns: Base-64 data hash.
+///
 public func hash(data: String, encoding: String.Encoding = .utf8) -> String {
     let encodedData = data.data(using: encoding)
     let hashedData = SHA256.hash(data: encodedData.unsafelyUnwrapped)
