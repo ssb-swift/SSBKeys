@@ -2,6 +2,20 @@
 
 Key loading and other cryptographic functions needed in Secure Scuttlebutt apps.
 
+## ToDo
+
+- [ ] Write usage examples
+- [ ] Finish public API
+    - [ ] signObj
+    - [ ] verifyObj
+    - [ ] box
+    - [ ] unbox
+    - [ ] unboxKey
+    - [ ] unboxBody
+    - [ ] secretBox
+    - [ ] secretUnbox
+- [ ] Store Keys in the Keychain
+
 ## Usage
 
 TBD
@@ -81,6 +95,25 @@ func hash(data: String, encoding: String.Encoding = .utf8) -> String
 
 - **data**: String representation of the data to encode.
 - **encoding**: [String encoding property][string_encoding]. Default value is `.utf8`.
+
+### `> loadOrCreate(secretPath:)`
+
+Loads the user's SSB credentials as `<Keys>`, contained in a given file path. If the file does not exist, it will create a new set of SSB
+credentials `<Keys>` and will store them in a file located in the given path.
+
+**Throws:** Throws an error if the *secret* file does not contains valid SSB credentials `<Keys>`.
+
+### Declaration
+
+```swift
+func loadOrCreate(secretPath: String?) throws -> Keys
+```
+
+### Parameters
+
+- **secretPath**: Path to the *secret* file containing the user's SSB credentials `<Keys>`. If a path is not provided this defaults to
+`~/.ssb/secret`.
+
 
 [data]: https://developer.apple.com/documentation/foundation/data
 [string_encoding]: https://developer.apple.com/documentation/swift/string/encoding

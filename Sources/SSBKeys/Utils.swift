@@ -16,7 +16,6 @@ import Crypto
 ///
 /// - Parameters:
 ///     - value:    Value to get the tag from i.e., an SSB private/public key or id.
-///
 /// - Returns:      Tag or encryption type used to encode the value.
 ///
 public func getTag(from value: String) -> String {
@@ -30,7 +29,6 @@ public func getTag(from value: String) -> String {
 /// - Parameters:
 ///     - data:     String representation of the data to encode.
 ///     - encoding: String encoding property. Default value is `.utf8`.
-///
 /// - Returns: Base-64 data hash.
 ///
 public func hash(data: String, encoding: String.Encoding = .utf8) -> String {
