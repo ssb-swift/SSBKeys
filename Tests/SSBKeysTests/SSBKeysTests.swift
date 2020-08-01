@@ -17,7 +17,7 @@ final class SSBKeysTests: XCTestCase {
         let keysOne = Keys()
         let keysTwo = Keys()
 
-        XCTAssertNotNil(keysOne.encryption, "The Encryption property exist")
+        XCTAssertNotNil(keysOne.curve, "The curve property exist")
         XCTAssertNotNil(keysOne.privateKey, "The privateKey property exist")
         XCTAssertNotNil(keysOne.publicKey, "The publicKey property exist")
         XCTAssertNotNil(keysOne.id, "The id property exist")
