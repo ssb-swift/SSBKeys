@@ -25,7 +25,7 @@ public enum Encryption: String, Codable {
 ///Keys is a struct that follows the SSB's keys object form, but using Swift native types instead of a serialized JSON
 ///for easy manipulation during development.
 ///
-/// ```JSON
+/// ```json
 /// {
 ///   "curve": "ed25519",
 ///   "private": "<base64_private_key>.ed25519",
