@@ -16,6 +16,19 @@ public enum Encryption: String, Codable {
     case ed25519
 }
 
+///
+///Keys is a struct that follows the SSB's keys object form, but using Swift native types instead of a serialized JSON
+///for easy manipulation during development.
+///
+/// ```JSON
+/// {
+///   "curve": "ed25519",
+///   "private": "<base64_private_key>.ed25519",
+///   "public": "<base64_public_key>.ed25519",
+///   "id": "@<base64_public_key>.ed25519"
+/// }
+/// ```
+///
 public struct Keys {
     public let curve: Encryption
     public let `private`: Curve25519.Signing.PrivateKey
