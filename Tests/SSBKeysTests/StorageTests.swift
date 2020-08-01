@@ -41,6 +41,12 @@ final class StorageTests: XCTestCase {
             XCTFail("Couldn't create Keys: \(error)")
         }
     }
+    
+    /// Remove the temporal *secret* file after running every test
+    override func tearDown() { // 8.
+            try? FileManager.default.removeItem(atPath: path)
+            super.tearDown()
+        }
 
     static var allTests = [
         ("testLoadOrCreate", testLoadOrCreate)
