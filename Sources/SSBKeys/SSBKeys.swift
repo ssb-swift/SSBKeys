@@ -11,6 +11,11 @@
 import Foundation
 import Crypto
 
+///
+/// Encryption types supported by SSBKeys. Currently, SSB supports Ed25519 only, so Swift SSB will keep it that way
+/// unless there is interest in the community to support additional encryption types across the different
+/// implementations of SSB.
+///
 public enum Encryption: String, Codable {
     /// EdDSA signature scheme using SHA-512 (SHA-2) and Curve25519.
     case ed25519
