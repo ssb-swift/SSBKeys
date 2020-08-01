@@ -18,7 +18,7 @@ final class SSBKeysTests: XCTestCase {
         let keysTwo = Keys()
 
         XCTAssertNotNil(keysOne.curve, "The curve property exist")
-        XCTAssertNotNil(keysOne.privateKey, "The privateKey property exist")
+        XCTAssertNotNil(keysOne.private, "The privateKey property exist")
         XCTAssertNotNil(keysOne.publicKey, "The publicKey property exist")
         XCTAssertNotNil(keysOne.id, "The id property exist")
         XCTAssertNotEqual(
@@ -34,8 +34,8 @@ final class SSBKeysTests: XCTestCase {
         let keysTwo = Keys(seed: seed)
 
         XCTAssertEqual(
-            keysOne.privateKey.rawRepresentation,
-            keysTwo.privateKey.rawRepresentation,
+            keysOne.private.rawRepresentation,
+            keysTwo.private.rawRepresentation,
             "Private keys are equal when seeded"
         )
         XCTAssertEqual(
@@ -53,8 +53,8 @@ final class SSBKeysTests: XCTestCase {
         let keysFromJSON = try! decoder.decode(Keys.self, from: jsonData)
 
         XCTAssertEqual(
-            keys.privateKey.rawRepresentation,
-            keysFromJSON.privateKey.rawRepresentation,
+            keys.private.rawRepresentation,
+            keysFromJSON.private.rawRepresentation,
             "Private keys are equal when created from JSON"
         )
         XCTAssertEqual(

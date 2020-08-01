@@ -33,8 +33,8 @@ final class StorageTests: XCTestCase {
             
             let keysTwo = try SSBKeys.loadOrCreate(secretPath: path)
             XCTAssertEqual(
-                keysOne.privateKey.rawRepresentation,
-                keysTwo.privateKey.rawRepresentation,
+                keysOne.private.rawRepresentation,
+                keysTwo.private.rawRepresentation,
                 "The keys were loaded from the secret file, not by creating a new set of Keys"
             )
         } catch {

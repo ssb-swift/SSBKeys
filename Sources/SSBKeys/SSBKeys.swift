@@ -18,13 +18,13 @@ public enum Encryption: String, Codable {
 
 public struct Keys {
     public let curve: Encryption
-    public let privateKey: Curve25519.Signing.PrivateKey
+    public let `private`: Curve25519.Signing.PrivateKey
     public let publicKey: Curve25519.Signing.PublicKey
     public let id: String
 
     enum CodingKeys: String, CodingKey {
         case curve
-        case privateKey = "private"
+        case `private`
         case publicKey = "public"
         case id
     }
@@ -53,8 +53,8 @@ extension Keys {
         }
 
         self.curve = encryption
-        self.privateKey = privateKey
-        self.publicKey = privateKey.publicKey
+        self.private = privateKey
+        self.publicKey = self.private.publicKey
         self.id = "@\(self.publicKey.rawRepresentation.base64EncodedString()).\(self.curve)"
     }
 }
@@ -70,12 +70,12 @@ extension Keys: Decodable {
     ///
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        let privateKeyValue = try values.decode(String.self, forKey: .privateKey)
+        let privateKeyValue = try values.decode(String.self, forKey: .private)
         let keyData = getData(from: privateKeyValue)
 
         self.curve = .ed25519
-        self.privateKey = try Curve25519.Signing.PrivateKey(rawRepresentation: keyData)
-        self.publicKey = self.privateKey.publicKey
+        self.private = try Curve25519.Signing.PrivateKey(rawRepresentation: keyData)
+        self.publicKey = self.private.publicKey
         self.id = "@\(self.publicKey.rawRepresentation.base64EncodedString()).\(self.curve)"
     }
 }
@@ -93,7 +93,7 @@ extension Keys: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(curve, forKey: .curve)
-        try container.encode("\(privateKey.rawRepresentation.base64EncodedString()).\(self.curve)", forKey: .privateKey)
+        try container.encode("\(self.private.rawRepresentation.base64EncodedString()).\(self.curve)", forKey: .private)
         try container.encode("\(publicKey.rawRepresentation.base64EncodedString()).\(self.curve)", forKey: .publicKey)
         try container.encode(id, forKey: .id)
     }
