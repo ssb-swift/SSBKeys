@@ -11,7 +11,7 @@
 import Foundation
 import Crypto
 import XCTest
-@testable import SSBKeys
+import SSBKeys
 
 final class UtilsTests: XCTestCase {
     func testGetTag() {

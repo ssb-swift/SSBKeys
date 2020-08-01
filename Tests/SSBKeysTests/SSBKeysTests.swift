@@ -10,7 +10,7 @@
 
 import Foundation
 import XCTest
-@testable import SSBKeys
+import SSBKeys
 
 final class SSBKeysTests: XCTestCase {
     func testKeysInit() {

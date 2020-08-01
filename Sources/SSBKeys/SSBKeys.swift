@@ -12,15 +12,15 @@ import Foundation
 import Crypto
 
 /// Encryption types supported by SSBKeys.
-enum Encryption: String, Codable {
+public enum Encryption: String, Codable {
     /// EdDSA signature scheme using SHA-512 (SHA-2) and Curve25519.
     case ed25519
 }
 
 public struct Keys {
-    let encryption: Encryption
-    let privateKey: Curve25519.Signing.PrivateKey
-    let publicKey: Curve25519.Signing.PublicKey
+    public let encryption: Encryption
+    public let privateKey: Curve25519.Signing.PrivateKey
+    public let publicKey: Curve25519.Signing.PublicKey
 
     enum CodingKeys: String, CodingKey {
         case encryption = "curve"
@@ -43,7 +43,7 @@ extension Keys {
     ///                     other type of encryption is supported yet), and accepts an optional seed that has to be a
     ///                     32-byte Data type buffer.
     ///
-    init(encryption: Encryption = .ed25519, seed: Data? = nil) {
+    public init(encryption: Encryption = .ed25519, seed: Data? = nil) {
         let privateKey: Curve25519.Signing.PrivateKey
 
         if let buffer = seed {
