@@ -20,6 +20,7 @@ final class SSBKeysTests: XCTestCase {
         XCTAssertNotNil(keysOne.encryption, "The Encryption property exist")
         XCTAssertNotNil(keysOne.privateKey, "The privateKey property exist")
         XCTAssertNotNil(keysOne.publicKey, "The publicKey property exist")
+        XCTAssertNotNil(keysOne.id, "The id property exist")
         XCTAssertNotEqual(
             keysOne.publicKey.rawRepresentation,
             keysTwo.publicKey.rawRepresentation,
@@ -42,6 +43,7 @@ final class SSBKeysTests: XCTestCase {
             keysTwo.publicKey.rawRepresentation,
             "Public keys are equal when seeded"
         )
+        XCTAssertEqual(keysOne.id, keysTwo.id, "Key IDs are equal when seeded")
     }
 
     func testKeysInitFromJSON() {
@@ -60,6 +62,7 @@ final class SSBKeysTests: XCTestCase {
             keysFromJSON.publicKey.rawRepresentation,
             "Public keys are equal when created from JSON"
         )
+        XCTAssertEqual(keys.id, keysFromJSON.id, "Key IDs are equal when created from JSON")
     }
 
     func testKeysToJSON() {

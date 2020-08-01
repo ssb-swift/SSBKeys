@@ -21,12 +21,13 @@ public struct Keys {
     public let encryption: Encryption
     public let privateKey: Curve25519.Signing.PrivateKey
     public let publicKey: Curve25519.Signing.PublicKey
+    public let id: String
 
     enum CodingKeys: String, CodingKey {
         case encryption = "curve"
         case privateKey = "private"
         case publicKey = "public"
-        case keyId = "id"
+        case id
     }
 }
 
@@ -55,6 +56,7 @@ extension Keys {
         self.encryption = encryption
         self.privateKey = privateKey
         self.publicKey = privateKey.publicKey
+        self.id = "@\(self.publicKey.rawRepresentation.base64EncodedString()).\(encryption)"
     }
 }
 
@@ -75,6 +77,7 @@ extension Keys: Decodable {
         encryption = .ed25519
         privateKey = try Curve25519.Signing.PrivateKey(rawRepresentation: keyData)
         publicKey = privateKey.publicKey
+        self.id = "@\(self.publicKey.rawRepresentation.base64EncodedString()).\(encryption)"
     }
 }
 
@@ -93,7 +96,7 @@ extension Keys: Encodable {
         try container.encode(encryption, forKey: .encryption)
         try container.encode("\(privateKey.rawRepresentation.base64EncodedString()).\(encryption)", forKey: .privateKey)
         try container.encode("\(publicKey.rawRepresentation.base64EncodedString()).\(encryption)", forKey: .publicKey)
-        try container.encode("@\(publicKey.rawRepresentation.base64EncodedString()).\(encryption)", forKey: .keyId)
+        try container.encode(id, forKey: .id)
     }
 }
 
