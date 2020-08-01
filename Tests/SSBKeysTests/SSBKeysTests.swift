@@ -19,11 +19,11 @@ final class SSBKeysTests: XCTestCase {
 
         XCTAssertNotNil(keysOne.curve, "The curve property exist")
         XCTAssertNotNil(keysOne.private, "The privateKey property exist")
-        XCTAssertNotNil(keysOne.publicKey, "The publicKey property exist")
+        XCTAssertNotNil(keysOne.public, "The publicKey property exist")
         XCTAssertNotNil(keysOne.id, "The id property exist")
         XCTAssertNotEqual(
-            keysOne.publicKey.rawRepresentation,
-            keysTwo.publicKey.rawRepresentation,
+            keysOne.public.rawRepresentation,
+            keysTwo.public.rawRepresentation,
             "Public keys are different"
         )
     }
@@ -39,8 +39,8 @@ final class SSBKeysTests: XCTestCase {
             "Private keys are equal when seeded"
         )
         XCTAssertEqual(
-            keysOne.publicKey.rawRepresentation,
-            keysTwo.publicKey.rawRepresentation,
+            keysOne.public.rawRepresentation,
+            keysTwo.public.rawRepresentation,
             "Public keys are equal when seeded"
         )
         XCTAssertEqual(keysOne.id, keysTwo.id, "Key IDs are equal when seeded")
@@ -58,8 +58,8 @@ final class SSBKeysTests: XCTestCase {
             "Private keys are equal when created from JSON"
         )
         XCTAssertEqual(
-            keys.publicKey.rawRepresentation,
-            keysFromJSON.publicKey.rawRepresentation,
+            keys.public.rawRepresentation,
+            keysFromJSON.public.rawRepresentation,
             "Public keys are equal when created from JSON"
         )
         XCTAssertEqual(keys.id, keysFromJSON.id, "Key IDs are equal when created from JSON")

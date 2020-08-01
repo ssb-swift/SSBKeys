@@ -19,13 +19,13 @@ public enum Encryption: String, Codable {
 public struct Keys {
     public let curve: Encryption
     public let `private`: Curve25519.Signing.PrivateKey
-    public let publicKey: Curve25519.Signing.PublicKey
+    public let `public`: Curve25519.Signing.PublicKey
     public let id: String
 
     enum CodingKeys: String, CodingKey {
         case curve
         case `private`
-        case publicKey = "public"
+        case `public`
         case id
     }
 }
@@ -54,8 +54,8 @@ extension Keys {
 
         self.curve = encryption
         self.private = privateKey
-        self.publicKey = self.private.publicKey
-        self.id = "@\(self.publicKey.rawRepresentation.base64EncodedString()).\(self.curve)"
+        self.public = self.private.publicKey
+        self.id = "@\(self.public.rawRepresentation.base64EncodedString()).\(self.curve)"
     }
 }
 
@@ -75,8 +75,8 @@ extension Keys: Decodable {
 
         self.curve = .ed25519
         self.private = try Curve25519.Signing.PrivateKey(rawRepresentation: keyData)
-        self.publicKey = self.private.publicKey
-        self.id = "@\(self.publicKey.rawRepresentation.base64EncodedString()).\(self.curve)"
+        self.public = self.private.publicKey
+        self.id = "@\(self.public.rawRepresentation.base64EncodedString()).\(self.curve)"
     }
 }
 
@@ -94,7 +94,7 @@ extension Keys: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(curve, forKey: .curve)
         try container.encode("\(self.private.rawRepresentation.base64EncodedString()).\(self.curve)", forKey: .private)
-        try container.encode("\(publicKey.rawRepresentation.base64EncodedString()).\(self.curve)", forKey: .publicKey)
+        try container.encode("\(self.public.rawRepresentation.base64EncodedString()).\(self.curve)", forKey: .public)
         try container.encode(id, forKey: .id)
     }
 }

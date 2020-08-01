@@ -102,7 +102,7 @@ private func storeCredentials(withKeys keys: Keys, atPath path: String) {
     #
     # The only part of this file that's safe to share is your public name:
     #
-    #   "@\(keys.publicKey.rawRepresentation.base64EncodedString()).\(keys.curve)"
+    #   "@\(keys.public.rawRepresentation.base64EncodedString()).\(keys.curve)"
     """
 
     try? content.write(toFile: path, atomically: true, encoding: .utf8)
