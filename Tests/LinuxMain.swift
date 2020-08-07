@@ -10,8 +10,12 @@
 
 import XCTest
 
-import SSBKeysTests
+import KeysTests
+import StorageTests
+import UtilsTests
 
 var tests = [XCTestCaseEntry]()
-tests += SSBKeysTests.allTests()
+tests += KeysTests.allTests()
+tests += StorageTests.allTests()
+tests += UtilsTests.allTests()
 XCTMain(tests)
