@@ -61,11 +61,11 @@ extension Keys {
     ///                     other type of encryption is supported yet), and accepts an optional seed that has to be a
     ///                     32-byte Data type buffer.
     ///
-    public init(encryption: Encryption = .ed25519, seed: Data? = nil) {
+    public init(encryption: Encryption = .ed25519, seed: Data? = nil) throws {
         let privateKey: Curve25519.Signing.PrivateKey
 
         if let buffer = seed {
-            privateKey = try! Curve25519.Signing.PrivateKey(rawRepresentation: buffer)
+            privateKey = try Curve25519.Signing.PrivateKey(rawRepresentation: buffer)
         } else {
             privateKey = Curve25519.Signing.PrivateKey()
         }
@@ -124,11 +124,11 @@ extension Keys {
     ///
     /// - Returns:  Keys as a JSON string.
     ///
-    public func toJSON() -> String {
+    public func toJSON() throws -> String {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
 
-        let data = try! encoder.encode(self)
+        let data = try encoder.encode(self)
 
         return String(data: data, encoding: .utf8)!
     }

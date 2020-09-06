@@ -26,7 +26,7 @@ public func loadOrCreate(secretPath: String?) throws -> Keys {
     if FileManager.default.fileExists(atPath: path) {
         keys = try loadKeys(fromPath: path)
     } else {
-        keys = createKeys(atPath: path)
+        keys = try createKeys(atPath: path)
     }
     
     return keys
@@ -46,7 +46,7 @@ private func loadKeys(fromPath path: String) throws -> Keys {
     let content = try? String(contentsOfFile: path, encoding: .utf8)
     let credentials = retrieveCredentials(fromContent: content!)
 
-    return try! decoder.decode(Keys.self, from: credentials.data(using: .utf8)!)
+    return try decoder.decode(Keys.self, from: credentials.data(using: .utf8)!)
 }
 
 ///
@@ -71,10 +71,10 @@ private func retrieveCredentials(fromContent content: String) -> String {
 /// - Parameter path:   Path to the file where the user's SSB credentials `<Keys>` will be stored.
 /// - Returns:          Set of new user credentials.
 ///
-private func createKeys(atPath path: String) -> Keys {
-    let keys = Keys()
+private func createKeys(atPath path: String) throws -> Keys {
+    let keys = try Keys()
 
-    storeCredentials(withKeys: keys, atPath: path)
+    try storeCredentials(withKeys: keys, atPath: path)
 
     return keys
 }
@@ -86,7 +86,7 @@ private func createKeys(atPath path: String) -> Keys {
 ///     - keys: User's SSB credentials `<Keys>` to store in the *secret* file.
 ///     - path: Path where the *secret* file will be created.
 ///
-private func storeCredentials(withKeys keys: Keys, atPath path: String) {
+private func storeCredentials(withKeys keys: Keys, atPath path: String) throws {
     let content = """
     # WARNING: Never show this to anyone.
     # WARNING: Never edit it or use it on multiple devices at once.
@@ -98,7 +98,7 @@ private func storeCredentials(withKeys keys: Keys, atPath path: String) {
     # If you use this secret on more than one device you will create a fork and
     # your friends will stop replicating your content.
     #
-    \(keys.toJSON())
+    \(try keys.toJSON())
     #
     # The only part of this file that's safe to share is your public name:
     #

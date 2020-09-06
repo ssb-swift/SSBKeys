@@ -14,8 +14,8 @@ import SSBKeys
 
 final class SSBKeysTests: XCTestCase {
     func testKeysInit() {
-        let keysOne = Keys()
-        let keysTwo = Keys()
+        let keysOne = try! Keys()
+        let keysTwo = try! Keys()
 
         XCTAssertNotNil(keysOne.curve, "The curve property exist")
         XCTAssertNotNil(keysOne.private, "The privateKey property exist")
@@ -30,8 +30,8 @@ final class SSBKeysTests: XCTestCase {
 
     func testKeysInitWithSeed() {
         let seed = "Z!6iT@z@g8U3y8CgpqM2yAuKc_ki!*Z8".data(using: .utf8)
-        let keysOne = Keys(seed: seed)
-        let keysTwo = Keys(seed: seed)
+        let keysOne = try! Keys(seed: seed)
+        let keysTwo = try! Keys(seed: seed)
 
         XCTAssertEqual(
             keysOne.private.rawRepresentation,
@@ -47,10 +47,10 @@ final class SSBKeysTests: XCTestCase {
     }
 
     func testKeysInitFromJSON() {
-        let keys = Keys()
+        let keys = try! Keys()
         let decoder = JSONDecoder()
-        let jsonData = keys.toJSON().data(using: .utf8)!
-        let keysFromJSON = try! decoder.decode(Keys.self, from: jsonData)
+        let jsonData = try! keys.toJSON().data(using: .utf8)
+        let keysFromJSON = try! decoder.decode(Keys.self, from: jsonData!)
 
         XCTAssertEqual(
             keys.private.rawRepresentation,
@@ -66,8 +66,8 @@ final class SSBKeysTests: XCTestCase {
     }
 
     func testKeysToJSON() {
-        let keys = Keys()
-        let json = keys.toJSON()
+        let keys = try! Keys()
+        let json = try! keys.toJSON()
         let jsonObject = try? JSONSerialization.jsonObject(with: json.data(using: .utf8)!, options: [])
 
         XCTAssertTrue(JSONSerialization.isValidJSONObject(jsonObject!), "The function returns a valid JSON")
